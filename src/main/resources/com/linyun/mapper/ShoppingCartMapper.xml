@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.linyun.mapper.ShoppingCartMapper">
+
+
+    <insert id="trendsAddShoppingCart">
+        insert into shopping_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="name!=null and name!=''">name,</if>
+            <if test="image!=null and image!=''">image,</if>
+            <if test="userId!=null and userId!=''">user_id,</if>
+            <if test="dishId!=null and dishId!=''">dish_id,</if>
+            <if test="setmealId!=null and setmealId!=''">setmeal_id,</if>
+            <if test="dishFlavor!=null and dishFlavor!=''">dish_flavor,</if>
+            <if test="number!=null and number!=''">number,</if>
+            <if test="amount!=null and amount!=''">amount,</if>
+            create_time
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{id},
+            <if test="name!=null and name!=''">#{name},</if>
+            <if test="image!=null and image!=''">#{image},</if>
+            <if test="userId!=null and userId!=''">#{userId},</if>
+            <if test="dishId!=null and dishId!=''">#{dishId},</if>
+            <if test="setmealId!=null and setmealId!=''">#{setmealId},</if>
+            <if test="dishFlavor!=null and dishFlavor!=''">#{dishFlavor},</if>
+            <if test="number!=null and number!=''">#{number},</if>
+            <if test="amount!=null and amount!=''">#{amount},</if>
+            #{createTime}
+        </trim>
+    </insert>
+
+    <update id="updateNumberByDishIdOrSetmealId">
+        update shopping_cart
+        <set>
+            number=#{number}
+        </set>
+        <where>
+            <if test="dishId!=null and dishId!='' ">dish_id=#{dishId}</if>
+            <if test="setmealId!=null and setmealId!=''">setmeal_id=#{setmealId}</if>
+        </where>
+    </update>
+
+    <delete id="deleteCartDishOrMeal">
+        delete
+        from shopping_cart
+        <where>
+            user_id=#{userId}
+            <if test="dishId!=null and dishId!='' ">and dish_id =#{dishId}</if>
+            <if test="setmealId!=null and setmealId!=''">and setmeal_id=#{setmealId}</if>
+        </where>
+    </delete>
+
+    <delete id="cleanCart">
+        delete
+        from shopping_cart
+        where user_id = #{userId}
+    </delete>
+
+
+    <select id="trendsSelectCartDishOrMeal" resultType="com.linyun.pojo.ShoppingCart">
+        select *from shopping_cart
+        <where>
+            user_id=#{userId}
+            <if test="dishId!=null and dishId!='' ">and dish_id=#{dishId}</if>
+            <if test="setmealId!=null and setmealId!=''"> and setmeal_id=#{setmealId}</if>
+        </where>
+    </select>
+
+    <select id="selectCartList" resultType="com.linyun.pojo.ShoppingCart">
+        select *
+        from shopping_cart
+        where user_id = #{userId}
+        order by create_time;
+    </select>
+</mapper>

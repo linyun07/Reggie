@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.linyun.mapper.DishFlavorMapper">
+
+
+    <insert id="insertAll" parameterType="java.util.List" useGeneratedKeys="false">
+        insert into dish_flavor(dish_id, name, value, create_time, update_time, create_user, update_user)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.dishId}, #{item.name}, #{item.value}, #{item.createTime},
+            #{item.updateTime},#{item.createUser},#{item.updateUser})
+        </foreach>
+    </insert>
+
+    <update id="batchDeleteById" parameterType="java.util.List" useGeneratedKeys="false">
+        update dish_flavor set is_deleted=1
+        where dish_id in
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+
+    </update>
+
+
+</mapper>

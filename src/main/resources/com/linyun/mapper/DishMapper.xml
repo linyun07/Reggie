@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.linyun.mapper.DishMapper">
+
+
+    <insert id="insertAll">
+        insert into dish(id, name, category_id, price, code, image, description, status, create_time, update_time,
+                         create_user, update_user)
+        values ( #{id}, #{name}, #{categoryId}, #{price}, #{code}, #{image}
+               , #{description}, #{status}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
+    </insert>
+
+    <update id="updateDish">
+        update dish
+        <set>
+            <if test="name!=null and name!=''">name=#{name},</if>
+            <if test="categoryId!=null">category_id=#{categoryId},</if>
+            <if test="price!=null">price=#{price},</if>
+            <if test="image!=null and image!=''">image=#{image},</if>
+            <if test="description!=null and description!=''">description=#{description},</if>
+            <if test="updateTime!=null">update_time=#{updateTime},</if>
+            <if test="updateUser!=null">update_user=#{updateUser},</if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <update id="batchDeleteById">
+        update dish set is_deleted=1
+        where id in
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        and status=1
+    </update>
+
+    <update id="batchUpdateStatusById">
+        update dish
+        <set>
+            status=#{status}
+        </set>
+        where id in
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="conditionGetCount" resultType="java.lang.Integer">
+        select count(*) from dish
+        <where>
+            <if test="name!=null and name!=''">
+                name like #{name}
+            </if>
+            and is_deleted=0
+        </where>
+    </select>
+
+    <select id="pageSelectByCondition" resultType="com.linyun.dto.DishDto">
+        select d.*,c.name "categoryName" from
+        dish d join category c
+        on d.category_id=c.id
+        <where>
+            <if test="name!=null and name!=''">
+                d.name like #{name}
+            </if>
+            and d.is_deleted=0
+        </where>
+        order by create_time
+        limit #{pageTotal},#{pageSize}
+    </select>
+</mapper>

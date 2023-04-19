@@ -1,0 +1,52 @@
+#配置端口
+server:
+  port: 80
+---
+#配置数据库信息
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql:///reggie?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: "123456"
+
+---
+
+mybatis:
+  configuration:
+    #查看SQL语句信息
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #在映射实体或者属性时，将数据库中的表名和字段名中的下划线去掉，按驼峰命名法
+    map-underscore-to-camel-case: true
+---
+mybatis-plus:
+  configuration:
+    #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+---
+#设置图片存储位置
+reggie:
+  path: D:\JavaIDEA\com.linyun\Reggie\src\main\resources\static\img\
+---
+#Redis相关配置
+spring:
+  cache:
+    redis:
+      time-to-live: 1800000 #设置缓存有效期
+  redis:
+    host: 47.120.37.50
+    port: 6379
+    password: 123456
+    database: 0 #redis提供了十六个数据库 这个表示使用0号数据库
+    jedis:
+      #Redis数据池配置
+      pool:
+        max-active: 8 # 最大连接数
+        max-wait: 1ms #连接池最大阻塞等待时间
+        max-idle: 4 #连接池中最大空闲时间
+        min-idle: 0 #连接池中最小空闲时间
