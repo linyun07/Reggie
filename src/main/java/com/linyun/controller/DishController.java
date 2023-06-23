@@ -9,7 +9,7 @@ import com.linyun.pojo.Dish;
 import com.linyun.pojo.DishFlavor;
 import com.linyun.service.DishFlavorService;
 import com.linyun.service.DishService;
-import com.linyun.service.categoryService;
+import com.linyun.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -35,7 +35,7 @@ public class DishController {
     private DishFlavorService dishFlavorService;
 
     @Resource
-    private categoryService categoryService;
+    private CategoryService categoryService;
 
     @Resource
     private RedisTemplate redisTemplate;

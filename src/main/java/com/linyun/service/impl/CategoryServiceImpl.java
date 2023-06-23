@@ -1,6 +1,5 @@
 package com.linyun.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.linyun.common.CustomException;
 import com.linyun.common.PageBean;
@@ -9,7 +8,7 @@ import com.linyun.mapper.CategoryMapper;
 import com.linyun.mapper.DishMapper;
 import com.linyun.mapper.SetMealMapper;
 import com.linyun.pojo.Category;
-import com.linyun.service.categoryService;
+import com.linyun.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,7 +19,7 @@ import java.util.List;
  * @date 2023/03/30/9:13
  */
 @Service
-public class categoryServiceImpl extends ServiceImpl<CategoryMapper,Category> implements categoryService {
+public class CategoryServiceImpl extends ServiceImpl<CategoryMapper,Category> implements CategoryService {
     @Resource
     private CategoryMapper mapper;
     @Resource

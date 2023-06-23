@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.linyun.common.PageBean;
 import com.linyun.common.Rest;
 import com.linyun.pojo.Category;
-import com.linyun.service.categoryService;
+import com.linyun.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
     @Resource
-    private categoryService categoryService;
+    private CategoryService categoryService;
 
     /**
      * 分页查询

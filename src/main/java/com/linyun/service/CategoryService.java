@@ -7,7 +7,7 @@ import com.linyun.pojo.Category;
 
 import java.util.List;
 
-public interface categoryService  extends IService<Category> {
+public interface CategoryService extends IService<Category> {
     /**
      * 分类页面的分页查询
      *
