@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
             //控制台输出短信 代替阿里云的短信服务
             log.info("信息是：{}", code);
 
-            //把验证码存进session
+            //把验证码存进Redis
             redisTemplate.opsForValue().set("code",code,5, TimeUnit.MINUTES);
 
             //发送成功标识
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
         //获取验证码
         String code = map.get("code").toString();
-        //获取session里面保存的验证码
+        //获取Redis里面保存的验证码
         String codeInSession = (String) redisTemplate.opsForValue().get("code");
         //对比页面传回来的code和session里面的code
         if (codeInSession != null && codeInSession.equals(code)) {
